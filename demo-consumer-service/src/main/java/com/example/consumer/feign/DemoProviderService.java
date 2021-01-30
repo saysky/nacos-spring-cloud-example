@@ -1,5 +1,6 @@
 package com.example.consumer.feign;
 
+import com.example.consumer.feign.fallback.DemoProviderServiceFallback;
 import com.example.consumer.pojo.User;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
@@ -8,11 +9,12 @@ import org.springframework.web.bind.annotation.*;
 /**
  * 这个 feign 接口一般由服务提供方提供jar
  * 或者消费方根据服务方的接口文档，自己写这个feign接口
+ * 如果调用 DemoProviderService 接口失败，会自动调用降级的实现(DemoProviderServiceFallback)
  *
  * @author 言曌
  * @date 2021/1/28 11:42 下午
  */
-@FeignClient("demo-provider-service")
+@FeignClient(value = "demo-provider-service", fallback = DemoProviderServiceFallback.class)
 public interface DemoProviderService {
     /**
      * 模拟获取用户列表

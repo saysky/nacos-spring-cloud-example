@@ -7,3 +7,18 @@ spring:
     nacos:
       discovery:
         server-addr: 127.0.0.1:8848
+    sentinel:
+      transport:
+        port: 8720
+        dashboard: 127.0.0.1:8080
+
+feign:
+  sentinel:
+    # 开启Sentinel对Feign的降级
+    enabled: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

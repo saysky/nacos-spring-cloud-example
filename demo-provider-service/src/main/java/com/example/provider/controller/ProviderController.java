@@ -2,6 +2,7 @@ package com.example.provider.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.example.provider.pojo.User;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ import java.util.Objects;
  * @date 2021/1/28 11:22 下午
  */
 @RestController
+@Slf4j
 public class ProviderController {
 
     /**
@@ -40,6 +42,7 @@ public class ProviderController {
      */
     @GetMapping("/user")
     public String getUserList() {
+//        System.out.println(1 / 0);
         return JSON.toJSONString(userList);
     }
 
@@ -78,11 +81,13 @@ public class ProviderController {
      */
     @PutMapping("/user")
     public String updateUser(@RequestBody User user) {
+        int index = 0;
         for (User u : userList) {
             if (Objects.equals(u.getId(), user.getId())) {
-                u = user;
+                userList.set(index, user);
                 break;
             }
+            index++;
         }
         return "success";
     }
